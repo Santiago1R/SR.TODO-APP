@@ -6,38 +6,19 @@ import { eliminarTarea } from "../../functionalities/eliminar_tarea.js";
 
 export function crearTarea(tarea, index) {
   const { texto, id } = tarea;
-  console.log(index, "marcador InDeX");
   const article = createTag("article", "homework");
-  const localArrayTareas = JSON.parse(localStorage.getItem("arrayTareas"));
-  console.log(localArrayTareas, "homeworks");
-  // article.classList.add("no-completado");
+  article.classList.add("no-completado");
   article.setAttribute("id", id);
   article.setAttribute("index", index);
   const div = createTag("div");
-
   const input = createTag("input", "circular-checkbox");
   input.setAttribute("type", "checkbox");
-  localArrayTareas.map((tarea) => {
-    let estado = false;
-    console.log(tarea, "AQUIIIII");
-    if (tarea.id == tarea.id) {
-      estado = tarea.finalizado;
-    }
-    if (tarea.finalizado == true) {
-      console.log("AHORA ES TRUE")
-      input.checked = true;
-      // article.classList.remove("no-completado")
-      // article.classList.add("completado")
-    } else if(tarea.finalizado == false){
-      console.log("AHORA ES FALSE")
-      input.checked = false;
-      // article.classList.remove("completado")
-      // article.classList.add("no-completado")
-    }
-    console.log(estado, "miraaaaaaa");
-  });
+  input.setAttribute("id", `input-${id}`);
+
   const textHomework = createTag("span");
+  textHomework.setAttribute("id",`span-${id}`)
   textHomework.textContent = texto;
+
 
   const close = createTag("button", "icon-delete");
   close.innerHTML = icons.cross;
@@ -52,7 +33,7 @@ export function crearTarea(tarea, index) {
     article.removeChild(close);
   });
 
-  input.addEventListener("change", () => EventChecked(input, textHomework));
   input.addEventListener("change", () => cambiarEstadoHomeWork(tarea, input));
+  input.addEventListener("change", () => EventChecked(input, textHomework));
   return article;
 }
